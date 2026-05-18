@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>克拉💎交流平台</title>
+    <style>
+        /* ==========================================
+           🎨 視覺風格與 UI 規範 (CSS) - 提高飽和度版本
+           ========================================== */
+        :root {
+            /* 提高飽和度後的主色調 */
+            --rose-quartz: #F497A3;          /* 調深、提高飽和度的玫瑰粉 */
+            --rose-quartz-light: #FCE5E8;    /* 背景粉 */
+            --serenity: #6A89CC;             /* 調深、更鮮明的寧靜藍 */
+            --serenity-light: #D5E1F2;       /* 背景藍 */
+            --text-dark: #2D3748;            /* 加深文字顏色提高對比度 */
+            --text-muted: #718096;
+            --white: #FFFFFF;
+            --shadow: 0 8px 24px rgba(106, 137, 204, 0.25); /* 增強陰影深淺 */
+            --border-radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--rose-quartz-light) 0%, var(--serenity-light) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* 導覽列 Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--serenity);
+            text-shadow: 1px 1px 2px rgba(244, 151, 163, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-btn {
+            background-color: transparent;
+            border: 2px solid var(--serenity);
+            color: var(--serenity);
+            padding: 8px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--serenity);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(106, 137, 204, 0.3);
+        }
+
+        .nav-btn.highlight {
+            background-color: var(--rose-quartz);
+            border-color: var(--rose-quartz);
+            color: var(--white);
+        }
+
+        .nav-btn.highlight:hover {
+            background-color: #E27B89;
+            border-color: #E27B89;
+            box-shadow: 0 4px 12px rgba(244, 151, 163, 0.4);
+        }
+
+        /* 主容器 Main Container */
+        .container {
+            flex: 1;
+            max-width: 800px;
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        /* 頁面區塊控制 */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .page.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 萬用卡片樣式 Card Style */
+        .card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        h2 {
+            color: var(--serenity);
+            margin-bottom: 25px;
+            font-size: 1.7rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--rose-quartz), var(--serenity));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 表單設計 Form Design */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+            background-color: #FAFAFA;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--serenity);
+            background-color: var(--white);
+            box-shadow: 0 0 0 4px rgba(106, 137, 204, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        /* 按鈕設計 Buttons */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--serenity) 0%, #5773B3) 100%;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(106, 137, 204, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 137, 204, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--rose-quartz) 0%, #D97E8B 100%);
+            box-shadow: 0 4px 10px rgba(244, 151, 163, 0.2);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 6px 20px rgba(244, 151, 163, 0.4);
+        }
+
+        .btn-flex {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .btn-flex .btn {
+            flex: 1;
+        }
+
+        /* 登入註冊雙表單切換 */
+        .auth-toggle {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .auth-toggle span {
+            color: var(--serenity);
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-left: 5px;
+        }
+
+        /* 檔案上傳預覽 */
+        .preview-box {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px dashed var(--serenity);
+            margin: 10px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: #F7FAFC;
+            transition: var(--transition);
+        }
+
+        .preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-post-img {
+            max-height: 220px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-top: 12px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* 個人首頁橫幅 */
+        .profile-banner {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            background: linear-gradient(135deg, rgba(244, 151, 163, 0.2) 0%, rgba(106, 137, 204, 0.2) 100%);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 4px solid var(--white);
+            box-shadow: var(--shadow);
+            object-fit: cover;
+        }
+
+        .profile-info h3 {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            background: rgba(255,255,255,0.6);
+            padding: 2px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .create-trigger-btn {
+            background-color: var(--white);
+            border: 2px dashed var(--serenity);
+            color: var(--serenity);
+            padding: 18px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .create-trigger-btn:hover {
+            background-color: var(--serenity-light);
+            border-color: var(--serenity);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* 貼文發布介面唯讀作者列 */
+        .readonly-author-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 18px;
+            background-color: var(--serenity-light);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .readonly-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--white);
+        }
+
+        /* 貼文卡片設計 Post Card */
+        .post-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(244, 151, 163, 0.15);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .post-author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2.5px solid var(--rose-quartz);
+        }
+
+        .post-meta {
+            flex: 1;
+        }
+
+        .post-author-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .post-author-id {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .post-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--serenity);
+            margin-bottom: 12px;
+        }
+
+        .post-content {
+            font-size: 1rem;
+            color: var(--text-dark);
+            white-space: pre-wrap;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+
+        .post-attached-img {
+            width: 100%;
+            max-height: 380px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* 貼文按鈕互動列 */
+        .post-actions {
+            display: flex;
+            border-top: 1px solid #E2E8F0;
+            border-bottom: 1px solid #E2E8F0;
+            padding: 10px 0;
+            margin-bottom: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .action-btn:hover {
+            background-color: var(--serenity-light);
+            color: var(--serenity);
+        }
+
+        .action-btn.liked {
+            color: #E53E3E;
+        }
+
+        /* 留言區塊 Comment Section */
+        .comment-section {
+            background-color: #F7FAFC;
+            border-radius: 12px;
+            padding: 20px;
+            display: none;
+            border: 1px solid #EDF2F7;
+        }
+
+        .comment-section.active-comments {
+            display: block;
+        }
+
+        .comment-list {
+            margin-bottom: 18px;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .comment-item {
+            padding: 10px 12px;
+            border-bottom: 1px dashed #E2E8F0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            color: var(--serenity);
+            margin-right: 8px;
+        }
+
+        .comment-text {
+            color: var(--text-dark);
+        }
+
+        .comment-form {
+            display: flex;
+            gap: 12px;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--serenity-light);
+            border-radius: 25px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: var(--serenity);
+            background-color: var(--white);
+        }
+
+        .comment-submit-btn {
+            background-color: var(--serenity);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .comment-submit-btn:hover {
+            background-color: #5773B3;
+        }
+
+        .comment-disabled-msg {
+            font-size: 0.9rem;
+            color: #E53E3E;
+            text-align: center;
+            padding: 8px;
+            background-color: #FFF5F5;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            border: 1px solid #FED7D7;
+        }
+
+        /* 溫馨對話框 (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active-modal {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: var(--white);
+            padding: 35px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-width: 420px;
+            width: 85%;
+            text-align: center;
+            transform: scale(0.9);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active-modal .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            color: var(--serenity);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .empty-tips {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 40px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo" id="navLogo">💎 克拉交流平台</div>
+        <div class="nav-search" style="display: flex; align-items: center; gap: 8px;">
+            <input type="text" id="searchInput" placeholder="搜尋 ID 或暱稱..." style="padding: 8px 15px; border-radius: 20px; border: 1px solid var(--serenity-light); outline: none; transition: all 0.3s; font-size: 0.95rem; max-width: 180px; width: 100%;" onkeydown="if(event.key === 'Enter') handleSearch()">
+            <button onclick="handleSearch()" style="background: var(--serenity-light); border: none; cursor: pointer; font-size: 1.1rem; padding: 6px 12px; border-radius: 20px; transition: all 0.2s;" onmouseover="this.style.background='var(--serenity)'; this.style.color='white';" onmouseout="this.style.background='var(--serenity-light)'; this.style.color='black';">🔍</button>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            </ul>
+    </nav>
+
+    <div class="container">
+
+        <section id="loginPage" class="page card">
+            <h2>歡迎回到克拉世界</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginId">帳號 (ID)</label>
+                    <input type="text" id="loginId" class="form-control" placeholder="請輸入帳號" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">密碼</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="請輸入密碼" required>
+                </div>
+                <button type="submit" class="btn">登入</button>
+            </form>
+            <div class="auth-toggle">
+                還沒有帳號嗎？ <span onclick="switchPage('registerPage')">立即註冊</span>
+            </div>
+        </section>
+
+        <section id="captchaPage" class="page card" style="text-align: center;">
+            <h2>登入雙重認證 (2FA)</h2>
+            <p style="margin-bottom: 20px; font-size: 1.1rem; color: var(--text-dark);">為了保護帳號安全，請從下方選出 <strong>所有含有「狗狗」</strong> 的真實圖片</p>
+            <div id="captchaGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 350px; margin: 0 auto;">
+                <!-- Captcha tiles -->
+            </div>
+            <div class="btn-flex" style="margin-top: 25px;">
+                <button type="button" class="btn btn-secondary" onclick="cancelLogin()">取消登入</button>
+                <button type="button" class="btn" onclick="verifyCaptcha()">進行驗證</button>
+            </div>
+        </section>
+
+        <section id="registerPage" class="page card">
+            <h2>成為新克拉💎</h2>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>上傳個人頭貼</label>
+                    <div class="preview-box" id="avatarPreviewBox">
+                        <span style="font-size: 2.2rem; color: var(--serenity);">📷</span>
+                    </div>
+                    <input type="file" id="registerAvatar" accept="image/*" class="form-control" onchange="previewAvatar(event)">
+                </div>
+                <div class="form-group">
+                    <label for="registerId">帳號 (ID)</label>
+                    <input type="text" id="registerId" class="form-control" placeholder="設定後不可修改" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerName">暱稱 (名稱)</label>
+                    <input type="text" id="registerName" class="form-control" placeholder="想要展現的名字" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">密碼</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="請輸入密碼" required>
+                </div>
+                <button type="submit" class="btn btn-secondary">完成註冊</button>
+            </form>
+            <div class="auth-toggle">
+                已經有帳號了？ <span onclick="switchPage('loginPage')">返回登入</span>
+            </div>
+        </section>
+
+        <section id="profilePage" class="page">
+            <div class="profile-banner">
+                <img src="" alt="頭貼" id="userProfileAvatar" class="profile-avatar">
+                <div class="profile-info">
+                    <h3 id="userProfileName">暱稱</h3>
+                    <p id="userProfileId">@ID</p>
+                </div>
+                <button class="btn btn-secondary" onclick="openEditProfilePage()" style="margin-left: auto; padding: 6px 15px; font-size: 0.9rem; border-radius: 20px;">✏️ 編輯資料</button>
+            </div>
+            
+            <div class="create-trigger-btn" onclick="openCreatePostPage()">
+                <span>新增貼文 ➕ Share your story!</span>
+            </div>
+
+            <h2>我的專屬動態牆</h2>
+            <div id="myPostsWall">
+                </div>
+        </section>
+
+        <section id="editProfilePage" class="page card">
+            <h2>編輯個人資料</h2>
+            <form id="editProfileForm" onsubmit="handleEditProfile(event)">
+                <div class="form-group">
+                    <label>更換個人頭貼</label>
+                    <div class="preview-box" id="editProfileAvatarPreviewBox">
+                        <span style="font-size: 2.2rem; color: var(--serenity);">📷</span>
+                        <img id="editProfileAvatarImg" src="" style="width:100%; height:100%; object-fit:cover; display:none;">
+                    </div>
+                    <input type="file" id="editProfileAvatar" accept="image/*" class="form-control" onchange="previewEditProfileAvatar(event)">
+                </div>
+                <div class="form-group">
+                    <label for="editProfileId">帳號 (ID) <span style="color:#E53E3E; font-size:0.8rem;">*不可修改</span></label>
+                    <input type="text" id="editProfileId" class="form-control" disabled style="background-color: #f7f7f7;">
+                </div>
+                <div class="form-group">
+                    <label for="editProfileName">顯示暱稱</label>
+                    <input type="text" id="editProfileName" class="form-control" required>
+                </div>
+                <div class="btn-flex">
+                    <button type="button" class="btn btn-secondary" onclick="switchPage('profilePage')">取消</button>
+                    <button type="submit" class="btn">儲存變更</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="createPostPage" class="page card">
+            <h2>創造克拉新話題</h2>
+            
+            <div class="readonly-author-bar">
+                <img src="" alt="頭貼" id="writePostAvatar" class="readonly-avatar">
+                <div>
+                    <strong id="writePostId">ID</strong>
+                    <span style="font-size:0.85rem; color:var(--text-muted); display:block;">正在編輯新內容...</span>
+                </div>
+            </div>
+
+            <form id="postForm" onsubmit="handleCreatePost(event)">
+                <div class="form-group">
+                    <label for="postTitle">發布主題</label>
+                    <input type="text" id="postTitle" class="form-control" placeholder="給貼文一個吸引人的主題吧！" required>
+                </div>
+                <div class="form-group">
+                    <label for="postContent">發布內容</label>
+                    <textarea id="postContent" class="form-control" placeholder="今天有什麼開心的克拉大小事想分享呢？" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="postImage">上傳照片 (選填)</label>
+                    <input type="file" id="postImage" accept="image/*" class="form-control" onchange="previewPostImage(event)">
+                    <img src="" id="postImgPreview" class="preview-post-img" alt="貼文圖片預覽">
+                </div>
+                <div class="btn-flex">
+                    <button type="button" class="btn btn-secondary" onclick="switchPage('profilePage')">取消</button>
+                    <button type="submit" class="btn">發布貼文</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="editPostPage" class="page card">
+            <h2>編輯貼文</h2>
+            
+            <div class="readonly-author-bar">
+                <img src="" alt="頭貼" id="editPostAvatar" class="readonly-avatar">
+                <div>
+                    <strong id="editPostId">ID</strong>
+                    <span style="font-size:0.85rem; color:var(--text-muted); display:block;">正在修改貼文內容...</span>
+                </div>
+            </div>
+
+            <form id="editPostForm" onsubmit="handleEditPost(event)">
+                <div class="form-group">
+                    <label for="editPostTitle">發布主題</label>
+                    <input type="text" id="editPostTitle" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPostContent">發布內容</label>
+                    <textarea id="editPostContent" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editPostImage">更新照片 (選填)</label>
+                    <input type="file" id="editPostImage" accept="image/*" class="form-control" onchange="previewEditPostImage(event)">
+                    <div style="margin-top: 12px; position: relative; display: inline-block;">
+                        <img src="" id="editPostImgPreview" class="preview-post-img" alt="貼文圖片預覽" style="display: none; margin-top: 0;">
+                        <button type="button" id="removeEditImgBtn" onclick="removeEditPostImage()" style="display: none; position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.8); border: none; border-radius: 50%; padding: 5px 10px; cursor: pointer; color: #E53E3E; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">✕ 移除</button>
+                    </div>
+                </div>
+                <div class="btn-flex">
+                    <button type="button" class="btn btn-secondary" onclick="switchPage('feedPage')">取消</button>
+                    <button type="submit" class="btn">儲存變更</button>
+                </div>
+            </form>
+        </section>
+
+        <section id="feedPage" class="page">
+            <h2>克拉大廣場分享區</h2>
+            <div id="globalFeedWall">
+                </div>
+        </section>
+
+        <section id="searchProfilePage" class="page">
+            <div class="profile-banner">
+                <img src="" alt="頭貼" id="searchUserProfileAvatar" class="profile-avatar">
+                <div class="profile-info">
+                    <h3 id="searchUserProfileName">暱稱</h3>
+                    <p id="searchUserProfileId">@ID</p>
+                </div>
+            </div>
+            
+            <h2 id="searchUserWallTitle" style="margin-top: 20px;">此用戶的分享</h2>
+            <div id="searchUserPostsWall">
+                <!-- Posts -->
+            </div>
+        </section>
+
+    </div>
+
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <div class="modal-title">💎 溫馨提示</div>
+            <div class="modal-text" id="modalText">是否有平台帳號？加入克拉大家庭才能進行互動喔！</div>
+            <div class="btn-flex">
+                <button class="btn btn-secondary" onclick="closeModal()">先看看就好</button>
+                <button class="btn" onclick="redirectToLogin()">前往登入/註冊</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DEFAULT_AVATAR = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100' height='100' fill='%236A89CC'/><circle cx='50' cy='40' r='20' fill='%23FFFFFF'/><path d='M20,80 C20,60 80,60 80,80' stroke='%23FFFFFF' stroke-width='4' fill='%23FFFFFF'/></svg>";
+
+        // 初始化 LocalStorage 資料結構
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([]));
+        }
+        if (!localStorage.getItem('posts')) {
+            localStorage.setItem('posts', JSON.stringify([]));
+        }
+
+        let registeredAvatarBase64 = "";
+        let postImageBase64 = "";
+        let editPostImageBase64 = "";
+        let currentEditPostId = null;
+        let pendingLoginUser = null;
+        let currentSearchUserId = null;
+        let editProfileAvatarBase64 = "";
+
+        window.onload = function() {
+            renderNavbar();
+            switchPage('feedPage'); // 預設先進入分享區
+        };
+
+        function getUsers() { return JSON.parse(localStorage.getItem('users')) || []; }
+        function getPosts() { return JSON.parse(localStorage.getItem('posts')) || []; }
+        function getCurrentUser() { 
+            try {
+                const stored = localStorage.getItem('currentUser');
+                if (!stored) return null;
+                const parsed = JSON.parse(stored);
+                if (typeof parsed === 'string') {
+                    const users = getUsers();
+                    return users.find(u => u.id === parsed) || null;
+                }
+                return parsed;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // SPA 頁面切換控制
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+            
+            if (pageId === 'profilePage') {
+                renderProfile();
+            } else if (pageId === 'feedPage') {
+                renderGlobalFeed();
+            } else if (pageId === 'createPostPage') {
+                renderCreatePostUserBar();
+            } else if (pageId === 'searchProfilePage') {
+                renderSearchProfile();
+            }
+            
+            renderNavbar();
+            window.scrollTo(0, 0);
+        }
+
+        // 動態渲染導覽列
+        function renderNavbar() {
+            const navLinks = document.getElementById('navLinks');
+            const user = getCurrentUser();
+            
+            if (user) {
+                navLinks.innerHTML = `
+                    <li><button class="nav-btn" onclick="switchPage('feedPage')">分享區</button></li>
+                    <li><button class="nav-btn" onclick="switchPage('profilePage')">個人首頁</button></li>
+                    <li><button class="nav-btn highlight" onclick="handleLogout()">登出</button></li>
+                `;
+            } else {
+                navLinks.innerHTML = `
+                    <li><button class="nav-btn" onclick="switchPage('feedPage')">分享區</button></li>
+                    <li><button class="nav-btn highlight" onclick="switchPage('loginPage')">登入 / 註冊</button></li>
+                `;
+            }
+        }
+
+        document.getElementById('navLogo').onclick = function() {
+            switchPage('feedPage');
+        };
+
+        // --- 1. 🔑 註冊與登入邏輯 ---
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                registeredAvatarBase64 = e.target.result;
+                document.getElementById('avatarPreviewBox').innerHTML = `<img src="${registeredAvatarBase64}">`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const id = document.getElementById('registerId').value.trim();
+            const name = document.getElementById('registerName').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const avatar = registeredAvatarBase64 || DEFAULT_AVATAR;
+
+            const users = getUsers();
+            if (users.find(u => u.id === id)) {
+                alert("此 ID 已經有人使用了，請換一個試試看！");
+                return;
+            }
+
+            users.push({ id, name, password, avatar });
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert("✨ 註冊成功！快登入與大家交流吧！");
+            document.getElementById('registerForm').reset();
+            document.getElementById('avatarPreviewBox').innerHTML = `<span style="font-size: 2.2rem; color: var(--serenity);">📷</span>`;
+            registeredAvatarBase64 = "";
+            switchPage('loginPage');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const id = document.getElementById('loginId').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const users = getUsers();
+            
+            // 系統防呆優化：若當前沒有任何註冊資料，自動導向註冊
+            if (users.length === 0) {
+                alert("💡 偵測到目前平台尚未建立任何帳號，系統將自動為您切換至「註冊頁面」！");
+                switchPage('registerPage');
+                return;
+            }
+
+            const user = users.find(u => u.id === id && u.password === password);
+
+            if (!user) {
+                alert("❌ 帳號或密碼不正確，或是您尚未進行註冊，請重新檢查！");
+                return;
+            }
+
+            pendingLoginUser = user;
+            document.getElementById('loginForm').reset();
+            initCaptcha();
+            switchPage('captchaPage');
+        }
+
+        function cancelLogin() {
+            pendingLoginUser = null;
+            switchPage('loginPage');
+        }
+
+        let currentCaptchaDogs = new Set();
+        let captchaSelectedIds = new Set();
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function initCaptcha() {
+            const grid = document.getElementById('captchaGrid');
+            grid.innerHTML = '';
+            captchaSelectedIds.clear();
+            currentCaptchaDogs.clear();
+            
+            const dogImages = [
+                '1517849845537-4d257902454a', '1543466835-00a7907e9de1', '1537151608804-ea2f1ea14a15', 
+                '1583337130417-3346a1be7dee', '1510771463146-e89e6e86560e', '1507146426996-ef05306b995a',
+                '1552053831-71594a27632d', '1530281700549-e82e7bf110d6', '1587300003388-59208cc962cb', '1544568100-847a948585b9'
+            ];
+            const catImages = [
+                '1514888286974-6c03e2ca1dba', '1495360010541-f48722b34f7d', '1533738363-b7f9aef128ce',
+                '1526336024174-e58f5cdd8e13', '1478098711619-5ab0b478d6e6', '1519052537078-e6302a4968d4',
+                '1501820488136-72669149e0d4', '1543852786-1cf6624b9987', '1511044568932-338cba0ad803', '1555685812-4b943f1cb0eb'
+            ];
+
+            const numDogs = Math.floor(Math.random() * 3) + 2; // 2 to 4 dogs
+            const numCats = 9 - numDogs;
+
+            const selectedDogs = shuffle([...dogImages]).slice(0, numDogs);
+            const selectedCats = shuffle([...catImages]).slice(0, numCats);
+
+            selectedDogs.forEach(id => currentCaptchaDogs.add(id));
+
+            const finalImages = shuffle([
+                ...selectedDogs.map(id => ({ id, type: 'dog' })),
+                ...selectedCats.map(id => ({ id, type: 'cat' }))
+            ]);
+
+            finalImages.forEach(imgData => {
+                const tile = document.createElement('div');
+                tile.style.width = '100%';
+                tile.style.paddingBottom = '100%'; 
+                tile.style.borderRadius = '8px';
+                tile.style.cursor = 'pointer';
+                tile.style.transition = 'all 0.2s';
+                tile.style.border = '4px solid transparent';
+                tile.style.position = 'relative';
+                tile.style.overflow = 'hidden';
+                tile.style.backgroundColor = '#E2E8F0';
+
+                const img = document.createElement('img');
+                img.src = `https://images.unsplash.com/photo-${imgData.id}?w=150&h=150&fit=crop`;
+                img.style.position = 'absolute';
+                img.style.top = '0';
+                img.style.left = '0';
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                
+                img.onerror = () => {
+                    img.src = imgData.type === 'dog' 
+                        ? 'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=150&h=150&fit=crop'
+                        : 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=150&h=150&fit=crop';
+                };
+
+                tile.appendChild(img);
+
+                tile.onclick = () => {
+                    if (captchaSelectedIds.has(imgData.id)) {
+                        captchaSelectedIds.delete(imgData.id);
+                        tile.style.borderColor = 'transparent';
+                        tile.style.transform = 'scale(1)';
+                        const check = tile.querySelector('.check-overlay');
+                        if (check) check.remove();
+                    } else {
+                        captchaSelectedIds.add(imgData.id);
+                        tile.style.borderColor = 'var(--serenity)';
+                        tile.style.transform = 'scale(0.95)';
+                        const check = document.createElement('div');
+                        check.className = 'check-overlay';
+                        check.innerHTML = '✅';
+                        check.style.position = 'absolute';
+                        check.style.top = '5px';
+                        check.style.right = '5px';
+                        check.style.background = 'white';
+                        check.style.borderRadius = '50%';
+                        check.style.padding = '2px';
+                        check.style.fontSize = '1.2rem';
+                        check.style.lineHeight = '1';
+                        check.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)';
+                        tile.appendChild(check);
+                    }
+                };
+                
+                grid.appendChild(tile);
+            });
+        }
+
+        function verifyCaptcha() {
+            if (currentCaptchaDogs.size === 0) return;
+
+            const isCorrect = captchaSelectedIds.size === currentCaptchaDogs.size && 
+                              [...captchaSelectedIds].every(id => currentCaptchaDogs.has(id));
+
+            if (isCorrect) {
+                if (pendingLoginUser) {
+                    try {
+                        localStorage.setItem('currentUser', JSON.stringify(pendingLoginUser.id));
+                        const userName = pendingLoginUser.name;
+                        pendingLoginUser = null;
+                        alert(`💎 雙重認證成功！歡迎回來，親愛的 ${userName}！`);
+                        switchPage('profilePage');
+                    } catch(err) {
+                        alert("登入過程中發生系統錯誤：" + err.message);
+                    }
+                } else {
+                    alert("⚠️ 系統遺失了您的登入資訊，請重新登入！");
+                    switchPage('loginPage');
+                }
+            } else {
+                alert("❌ 認證失敗！選取的圖片不正確，請再試一次！");
+                initCaptcha();
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('currentUser');
+            alert("已成功安全登出平台囉！👋");
+            switchPage('feedPage');
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!query) return;
+
+            const users = getUsers();
+            const foundUser = users.find(u => u.id.toLowerCase() === query || u.name.toLowerCase() === query);
+
+            if (!foundUser) {
+                alert("查無此 ID 或暱稱的克拉，請確認後再搜尋一次！");
+                return;
+            }
+
+            const currentUser = getCurrentUser();
+            if (currentUser && currentUser.id === foundUser.id) {
+                switchPage('profilePage');
+                return;
+            }
+
+            currentSearchUserId = foundUser.id;
+            switchPage('searchProfilePage');
+        }
+
+        function renderSearchProfile() {
+            if (!currentSearchUserId) return;
+            const users = getUsers();
+            const user = users.find(u => u.id === currentSearchUserId);
+            if (!user) return;
+
+            document.getElementById('searchUserProfileAvatar').src = user.avatar || DEFAULT_AVATAR;
+            document.getElementById('searchUserProfileName').innerText = user.name;
+            document.getElementById('searchUserProfileId').innerText = `@${user.id}`;
+            document.getElementById('searchUserWallTitle').innerText = `${user.name} 的專屬動態牆`;
+
+            const allPosts = getPosts();
+            const userPosts = allPosts.filter(p => p.authorId === user.id);
+            const wall = document.getElementById('searchUserPostsWall');
+
+            if (userPosts.length === 0) {
+                wall.innerHTML = `<div class="empty-tips">這位克拉還沒有發布過任何貼文喔！</div>`;
+                return;
+            }
+
+            userPosts.sort((a, b) => b.timestamp - a.timestamp);
+            wall.innerHTML = userPosts.map(post => generatePostCardHtml(post, false)).join('');
+        }
+
+        function reRenderCurrentPage() {
+            const active = document.querySelector('.active-page');
+            if (!active) return;
+            if (active.id === 'profilePage') renderProfile();
+            else if (active.id === 'feedPage') renderGlobalFeed();
+            else if (active.id === 'searchProfilePage') renderSearchProfile();
+        }
+
+        // --- 2. 🏠 個人首頁邏輯 ---
+        function renderProfile() {
+            const user = getCurrentUser();
+            if (!user) {
+                switchPage('loginPage');
+                return;
+            }
+
+            document.getElementById('userProfileAvatar').src = user.avatar;
+            document.getElementById('userProfileName').innerText = user.name;
+            document.getElementById('userProfileId').innerText = `@${user.id}`;
+
+            const allPosts = getPosts();
+            const myPosts = allPosts.filter(p => p.authorId === user.id);
+            const myPostsWall = document.getElementById('myPostsWall');
+
+            if (myPosts.length === 0) {
+                myPostsWall.innerHTML = `<div class="empty-tips">你還家庭沒有發布過任何貼文，點選上方按鈕開始分享吧！</div>`;
+                return;
+            }
+
+            myPosts.sort((a, b) => b.timestamp - a.timestamp);
+            myPostsWall.innerHTML = myPosts.map(post => generatePostCardHtml(post, true)).join('');
+        }
+
+        function openEditProfilePage() {
+            const user = getCurrentUser();
+            if (!user) return;
+            
+            document.getElementById('editProfileId').value = user.id;
+            document.getElementById('editProfileName').value = user.name;
+            
+            editProfileAvatarBase64 = user.avatar || "";
+            const previewImg = document.getElementById('editProfileAvatarImg');
+            
+            if (editProfileAvatarBase64) {
+                previewImg.src = editProfileAvatarBase64;
+                previewImg.style.display = 'block';
+                document.getElementById('editProfileAvatarPreviewBox').style.background = 'transparent';
+                const emoji = document.getElementById('editProfileAvatarPreviewBox').querySelector('span');
+                if(emoji) emoji.style.display = 'none';
+            } else {
+                previewImg.style.display = 'none';
+                const emoji = document.getElementById('editProfileAvatarPreviewBox').querySelector('span');
+                if(emoji) emoji.style.display = 'inline';
+            }
+            
+            switchPage('editProfilePage');
+        }
+
+        function previewEditProfileAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editProfileAvatarBase64 = e.target.result;
+                const previewImg = document.getElementById('editProfileAvatarImg');
+                previewImg.src = editProfileAvatarBase64;
+                previewImg.style.display = 'block';
+                
+                const emoji = document.getElementById('editProfileAvatarPreviewBox').querySelector('span');
+                if(emoji) emoji.style.display = 'none';
+                document.getElementById('editProfileAvatarPreviewBox').style.background = 'transparent';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleEditProfile(event) {
+            event.preventDefault();
+            const user = getCurrentUser();
+            if (!user) return;
+
+            const newName = document.getElementById('editProfileName').value.trim();
+            if (!newName) {
+                alert("暱稱不能為空喔！");
+                return;
+            }
+
+            const users = getUsers();
+            const userIndex = users.findIndex(u => u.id === user.id);
+            if (userIndex > -1) {
+                users[userIndex].name = newName;
+                if (editProfileAvatarBase64) {
+                    users[userIndex].avatar = editProfileAvatarBase64;
+                }
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+
+            const posts = getPosts();
+            posts.forEach(post => {
+                if (post.authorId === user.id) {
+                    post.authorName = newName;
+                    if (editProfileAvatarBase64) {
+                        post.authorAvatar = editProfileAvatarBase64;
+                    }
+                }
+                post.comments.forEach(comment => {
+                    if (comment.commenterId === user.id) {
+                        comment.commenterName = newName;
+                    }
+                });
+            });
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            alert("✨ 個人資料更新成功！");
+            switchPage('profilePage');
+        }
+
+        function openCreatePostPage() {
+            const user = getCurrentUser();
+            if (!user) {
+                showModal("想要發布新貼文嗎？快去登入帳號開啟全新世界！");
+                return;
+            }
+            switchPage('createPostPage');
+        }
+
+        // --- 3. ✍️ 全新發文頁面邏輯 ---
+        function renderCreatePostUserBar() {
+            const user = getCurrentUser();
+            if (!user) return;
+            document.getElementById('writePostAvatar').src = user.avatar;
+            document.getElementById('writePostId').innerText = `${user.name} (@${user.id})`;
+        }
+
+        function previewPostImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('postImgPreview');
+            if (!file) {
+                preview.style.display = 'none';
+                postImageBase64 = "";
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                postImageBase64 = e.target.result;
+                preview.src = postImageBase64;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleCreatePost(event) {
+            event.preventDefault();
+            const user = getCurrentUser();
+            if (!user) return;
+
+            const title = document.getElementById('postTitle').value.trim();
+            const content = document.getElementById('postContent').value.trim();
+
+            if (!title || !content) {
+                alert("⚠️ 請填寫完整的主題與發布內容唷！");
+                return;
+            }
+
+            const posts = getPosts();
+            const newPost = {
+                id: 'post_' + Date.now(),
+                authorId: user.id,
+                authorName: user.name,
+                authorAvatar: user.avatar,
+                title: title,
+                content: content,
+                image: postImageBase64 || null,
+                likes: [],
+                comments: [],
+                timestamp: Date.now()
+            };
+
+            posts.push(newPost);
+            localStorage.setItem('posts', JSON.stringify(posts));
+
+            alert("🎉 貼文發布成功！已同步發布至大廣場分享區。");
+            
+            document.getElementById('postForm').reset();
+            document.getElementById('postImgPreview').style.display = 'none';
+            postImageBase64 = "";
+
+            switchPage('feedPage');
+        }
+
+        function openEditPostPage(postId) {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            const posts = getPosts();
+            const post = posts.find(p => p.id === postId);
+            if (!post || post.authorId !== user.id) return;
+
+            currentEditPostId = postId;
+            
+            document.getElementById('editPostAvatar').src = user.avatar;
+            document.getElementById('editPostId').innerText = `${user.name} (@${user.id})`;
+
+            document.getElementById('editPostTitle').value = post.title;
+            document.getElementById('editPostContent').value = post.content;
+            
+            editPostImageBase64 = post.image || "";
+            const preview = document.getElementById('editPostImgPreview');
+            const removeBtn = document.getElementById('removeEditImgBtn');
+            const fileInput = document.getElementById('editPostImage');
+            fileInput.value = ""; 
+            
+            if (editPostImageBase64) {
+                preview.src = editPostImageBase64;
+                preview.style.display = 'block';
+                removeBtn.style.display = 'block';
+            } else {
+                preview.style.display = 'none';
+                removeBtn.style.display = 'none';
+            }
+
+            switchPage('editPostPage');
+        }
+
+        function previewEditPostImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('editPostImgPreview');
+            const removeBtn = document.getElementById('removeEditImgBtn');
+            
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                editPostImageBase64 = e.target.result;
+                preview.src = editPostImageBase64;
+                preview.style.display = 'block';
+                removeBtn.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function removeEditPostImage() {
+            editPostImageBase64 = "";
+            document.getElementById('editPostImgPreview').style.display = 'none';
+            document.getElementById('removeEditImgBtn').style.display = 'none';
+            document.getElementById('editPostImage').value = "";
+        }
+
+        function handleEditPost(event) {
+            event.preventDefault();
+            const title = document.getElementById('editPostTitle').value.trim();
+            const content = document.getElementById('editPostContent').value.trim();
+
+            if (!title || !content) {
+                alert("⚠️ 請填寫完整的主題與發布內容唷！");
+                return;
+            }
+
+            const posts = getPosts();
+            const postIndex = posts.findIndex(p => p.id === currentEditPostId);
+            
+            if (postIndex > -1) {
+                posts[postIndex].title = title;
+                posts[postIndex].content = content;
+                posts[postIndex].image = editPostImageBase64 || null;
+                
+                localStorage.setItem('posts', JSON.stringify(posts));
+                alert("✅ 貼文已成功更新！");
+                
+                switchPage('feedPage');
+            }
+        }
+
+        // --- 4 & 5. 🌍 全局分享區與留言功能邏輯 ---
+        function renderGlobalFeed() {
+            const posts = getPosts();
+            const globalFeedWall = document.getElementById('globalFeedWall');
+
+            if (posts.length === 0) {
+                globalFeedWall.innerHTML = `<div class="empty-tips">廣場上空空如也，快登入成為第一個發文的克拉吧！✨</div>`;
+                return;
+            }
+
+            posts.sort((a, b) => b.timestamp - a.timestamp);
+            globalFeedWall.innerHTML = posts.map(post => generatePostCardHtml(post, false)).join('');
+        }
+
+        function generatePostCardHtml(post, isProfileWall) {
+            const user = getCurrentUser();
+            const formattedTime = new Date(post.timestamp).toLocaleString();
+            
+            const isLiked = user && post.likes.includes(user.id);
+            const likeIcon = isLiked ? '❤️' : '🤍';
+            const likeClass = isLiked ? 'action-btn liked' : 'action-btn';
+
+            const imgHtml = post.image ? `<img src="${post.image}" class="post-attached-img" alt="貼文附件">` : '';
+
+            const commentsHtml = post.comments.map(c => `
+                <div class="comment-item">
+                    <span class="comment-user">${escapeHtml(c.commenterName)}:</span>
+                    <span class="comment-text">${escapeHtml(c.text)}</span>
+                </div>
+            `).join('');
+
+            let commentFormHtml = "";
+            if (user) {
+                commentFormHtml = `
+                    <form class="comment-form" onsubmit="handleCommentSubmit(event, '${post.id}', ${isProfileWall})">
+                        <input type="text" class="comment-input" placeholder="寫下溫馨的克拉評論..." required>
+                        <button type="submit" class="comment-submit-btn">送出</button>
+                    </form>
+                `;
+            } else {
+                commentFormHtml = `
+                    <div class="comment-disabled-msg" onclick="triggerAuthIntercept()">🔒 請先「登入」帳號以發表克拉評論</div>
+                `;
+            }
+
+            let deleteBtnHtml = "";
+            let editBtnHtml = "";
+            if (user && user.id === post.authorId) {
+                editBtnHtml = `
+                        <button class="action-btn" onclick="openEditPostPage('${post.id}')" style="color: #6A89CC;">
+                            <span>✏️</span> 編輯
+                        </button>
+                `;
+                deleteBtnHtml = `
+                        <button class="action-btn" onclick="handleDeletePost('${post.id}', ${isProfileWall})" style="color: #E53E3E;">
+                            <span>🗑️</span> 刪除
+                        </button>
+                `;
+            }
+
+            return `
+                <div class="post-card" id="card_${post.id}">
+                    <div class="post-header">
+                        <img src="${post.authorAvatar || DEFAULT_AVATAR}" class="post-author-img" alt="作者頭貼">
+                        <div class="post-meta">
+                            <div class="post-author-name">${escapeHtml(post.authorName)}</div>
+                            <div class="post-author-id">@${escapeHtml(post.authorId)}</div>
+                        </div>
+                        <div class="post-time">${formattedTime}</div>
+                    </div>
+                    <div class="post-title">${escapeHtml(post.title)}</div>
+                    <div class="post-content">${escapeHtml(post.content)}</div>
+                    ${imgHtml}
+                    
+                    <div class="post-actions">
+                        <button class="${likeClass}" onclick="handleLikeClick('${post.id}', ${isProfileWall})">
+                            <span>${likeIcon}</span> 按讚 (${post.likes.length})
+                        </button>
+                        <button class="action-btn" onclick="toggleCommentsSection('${post.id}')">
+                            <span>💬</span> 評論 (${post.comments.length})
+                        </button>
+${editBtnHtml}
+${deleteBtnHtml}
+                    </div>
+
+                    <div class="comment-section" id="comments_box_${post.id}">
+                        <div class="comment-list">
+                            ${commentsHtml || '<div class="empty-tips" style="padding:10px 0; font-size:0.85rem;">目前還沒有評論，快來搶沙發！</div>'}
+                        </div>
+                        ${commentFormHtml}
+                    </div>
+                </div>
+            `;
+        }
+
+        function handleDeletePost(postId, isProfileWall) {
+            const user = getCurrentUser();
+            if (!user) return;
+
+            if (confirm("確定要刪除這篇貼文嗎？刪除後無法恢復喔！")) {
+                const posts = getPosts();
+                const postIndex = posts.findIndex(p => p.id === postId);
+                
+                if (postIndex > -1) {
+                    if (posts[postIndex].authorId !== user.id) {
+                        alert("❌ 你沒有權限刪除這篇貼文！");
+                        return;
+                    }
+                    posts.splice(postIndex, 1);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+                    
+                    reRenderCurrentPage();
+                }
+            }
+        }
+
+        function handleLikeClick(postId, isProfileWall) {
+            const user = getCurrentUser();
+            if (!user) {
+                triggerAuthIntercept();
+                return;
+            }
+
+            const posts = getPosts();
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            const likeIndex = post.likes.indexOf(user.id);
+            if (likeIndex > -1) {
+                post.likes.splice(likeIndex, 1);
+            } else {
+                post.likes.push(user.id);
+            }
+
+            localStorage.setItem('posts', JSON.stringify(posts));
+            
+            reRenderCurrentPage();
+        }
+
+        function toggleCommentsSection(postId) {
+            const commentsBox = document.getElementById(`comments_box_${postId}`);
+            if (commentsBox.classList.contains('active-comments')) {
+                commentsBox.classList.remove('active-comments');
+            } else {
+                commentsBox.classList.add('active-comments');
+            }
+        }
+
+        function handleCommentSubmit(event, postId, isProfileWall) {
+            event.preventDefault();
+            const user = getCurrentUser();
+            if (!user) return;
+
+            const form = event.target;
+            const input = form.querySelector('.comment-input');
+            const commentText = input.value.trim();
+
+            if (!commentText) return;
+
+            const posts = getPosts();
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+
+            post.comments.push({
+                id: 'comment_' + Date.now(),
+                commenterId: user.id,
+                commenterName: user.name,
+                text: commentText
+            });
+
+            localStorage.setItem('posts', JSON.stringify(posts));
+            form.reset();
+
+            reRenderCurrentPage();
+            
+            setTimeout(() => {
+                const box = document.getElementById(`comments_box_${postId}`);
+                if (box) box.classList.add('active-comments');
+            }, 50);
+        }
+
+        function triggerAuthIntercept() {
+            showModal("是否有平台帳號？加入克拉大家庭才能進行留言或按讚互動喔！");
+        }
+
+        // --- 溫馨對話框 Modal 控制組 ---
+        function showModal(text) {
+            document.getElementById('modalText').innerText = text;
+            document.getElementById('authModal').classList.add('active-modal');
+        }
+
+        function closeModal() {
+            document.getElementById('authModal').classList.remove('active-modal');
+        }
+
+        function redirectToLogin() {
+            closeModal();
+            switchPage('loginPage');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;")
+                      .replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;")
+                      .replace(/"/g, "&quot;")
+                      .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
